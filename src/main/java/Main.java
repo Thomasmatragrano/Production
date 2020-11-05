@@ -4,16 +4,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main Driver Class.
+ *
+ * @author Thomas Matragrano
+ */
 public class Main extends Application {
 
+    /**
+     * Main Initialization.
+     *
+     * @param args
+     * @return void
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Creates Scene for sample.fxml implementation.
+     * Implements style.css Style Sheet.
+     *
+     * @param primaryStage
+     * @return void
+     */
     @Override
-
     public void start(Stage primaryStage) throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene scene = new Scene(root, 700, 400);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());

@@ -6,6 +6,12 @@ import javafx.fxml.FXML;
 
 import java.sql.*;
 
+/**
+ * JavaFX event handling and input registry.
+ * Establishes Database Connectivity.
+ *
+ * @author Thomas Matragrano
+ */
 public class Controller {
     @FXML
     private TextField lblManufacturerOutput;
@@ -21,17 +27,12 @@ public class Controller {
     Statement stmt = null;
     PreparedStatement ps = null;
 
-    public void initialize() {
-        initializeDB();
-        //Populates the Item Type ChoiceBox
-        itemTypeChoiceBox.getItems().addAll("AUDIO", "VIDEO");
-        itemTypeChoiceBox.getSelectionModel().selectFirst();
-        //Populates the Quantity ComboBox
-        quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-        quantityComboBox.getSelectionModel().selectFirst();
-        quantityComboBox.setEditable(true);
-    }
-
+    /**
+     * Establishes Database Connectivity.
+     *
+     * @param
+     * @return void
+     */
     private void initializeDB() {
         //  Database credentials
         final String JDBC_DRIVER = "org.h2.Driver";
@@ -50,9 +51,42 @@ public class Controller {
         }
     }
 
-    public void recordProduction(ActionEvent actionEvent) {
+    /**
+     * Calls to establish Database Connectivity.
+     * Populates JavaFX ChoiceBox and ComboBox Components.
+     *
+     * @param
+     * @return void
+     */
+    public void initialize() {
+        initializeDB();
+        //Populates the Item Type ChoiceBox
+        itemTypeChoiceBox.getItems().addAll("AUDIO", "VIDEO");
+        itemTypeChoiceBox.getSelectionModel().selectFirst();
+        //Populates the Quantity ComboBox
+        quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        quantityComboBox.getSelectionModel().selectFirst();
+        quantityComboBox.setEditable(true);
     }
 
+    /**
+     * Control for "Record Production" Button Click.
+     *
+     * @param actionEvent
+     * @return void Prints to the console
+     */
+    public void recordProduction(ActionEvent actionEvent) {
+        System.out.println("Production Recorded");
+    }
+
+    /**
+     * Functionality for "Add Product" Button Click.
+     * Inserts GUI input into Database.
+     * Prints full list of Products to the Console.
+     *
+     * @param actionEvent
+     * @return void Prints to the console
+     */
     public void addProduct(ActionEvent actionEvent) {
         initialize();
         String name = lblNameOutput.getText();
@@ -74,9 +108,9 @@ public class Controller {
                 System.out.println("ID: " + rs.getString(1) + "\nName: " + rs.getString(2) + "\nType " + rs.getString(3) + "\nManufacturer " + rs.getString(4));
             }
             //clean up environment
-              ps.close();
+            ps.close();
             stmt.close();
-             conn.close();
+            conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR);
