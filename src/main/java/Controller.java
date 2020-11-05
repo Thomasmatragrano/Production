@@ -59,10 +59,9 @@ public class Controller {
      * @return void
      */
     public void initialize() {
-        initializeDB();
         //Populates the Item Type ChoiceBox
         itemTypeChoiceBox.getItems().addAll("AUDIO", "VIDEO");
-        itemTypeChoiceBox.getSelectionModel().selectFirst();
+        itemTypeChoiceBox.getSelectionModel();
         //Populates the Quantity ComboBox
         quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         quantityComboBox.getSelectionModel().selectFirst();
@@ -88,10 +87,10 @@ public class Controller {
      * @return void Prints to the console
      */
     public void addProduct(ActionEvent actionEvent) {
-        initialize();
+        initializeDB();
         String name = lblNameOutput.getText();
         String manufacturer = lblManufacturerOutput.getText();
-        String type = itemTypeChoiceBox.getSelectionModel().getSelectedItem();
+        final String type = itemTypeChoiceBox.getSelectionModel().getSelectedItem();
         try {
             //Inserts variables name, manufacturer, type into ProductionDB using a prepared statement
             final String sql = "INSERT INTO Product (name, type, manufacturer) VALUES ( ?, ?, ? );";
