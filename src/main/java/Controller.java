@@ -60,8 +60,9 @@ public class Controller {
      */
     public void initialize() {
         //Populates the Item Type ChoiceBox
-        itemTypeChoiceBox.getItems().addAll("AUDIO", "VIDEO");
-        itemTypeChoiceBox.getSelectionModel();
+        for (ItemType I: ItemType.values())
+        itemTypeChoiceBox.getItems().addAll(String.valueOf(I));
+        itemTypeChoiceBox.getSelectionModel().selectFirst();
         //Populates the Quantity ComboBox
         quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         quantityComboBox.getSelectionModel().selectFirst();
