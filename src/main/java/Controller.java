@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * JavaFX event handling and input registry.
@@ -52,6 +53,46 @@ public class Controller {
     }
 
     /**
+     * Test Method for Multimedia Functionality
+     *
+     * @param
+     * @return void
+     */
+    public static void testMultimedia() {
+
+        AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
+
+                "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
+
+        Screen newScreen = new Screen("720x480", 40, 22);
+
+        MoviePlayer newMovieProduct = new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen,
+
+                MonitorType.LCD);
+
+        ArrayList<MultimediaControl> productList = new ArrayList<MultimediaControl>();
+
+        productList.add(newAudioProduct);
+
+        productList.add(newMovieProduct);
+
+        for (MultimediaControl p : productList) {
+
+            System.out.println(p);
+
+            p.play();
+
+            p.stop();
+
+            p.next();
+
+            p.previous();
+
+        }
+
+    }
+
+    /**
      * Calls to establish Database Connectivity.
      * Populates JavaFX ChoiceBox and ComboBox Components.
      *
@@ -67,6 +108,8 @@ public class Controller {
         quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         quantityComboBox.getSelectionModel().selectFirst();
         quantityComboBox.setEditable(true);
+
+        testMultimedia();
     }
 
     /**
