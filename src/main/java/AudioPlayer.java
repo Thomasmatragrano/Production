@@ -4,20 +4,20 @@
  */
 public class AudioPlayer extends Product implements MultimediaControl {
 
-    private String audioSpecification;
-    private String mediaType;
+    private String supportedAudioFormats;
+    private String supportedPlaylistFormats;
 
     /**
      * @brief Constructor for AudioPlayer that takes parameters for name, manufacturer,
      *     audioSpecification, and MediaType.
      */
     public AudioPlayer(
-            String name, String manufacturer, String audioSpecification, String mediaType) {
-        super(name);
-        this.audioSpecification = audioSpecification;
+            String name, String manufacturer, String supportedAudioFormats, String supportedPlaylistFormats) {
+        super(name,ItemType.valueOf(supportedAudioFormats),manufacturer);
         this.manufacturer = manufacturer;
-        this.mediaType = mediaType;
-        type = ItemType.AUDIO;
+        this.supportedAudioFormats = supportedAudioFormats;
+        this.supportedPlaylistFormats = supportedPlaylistFormats;
+        Type = ItemType.AUDIO;
     }
 
     /** This void method shows the user is playing media. */
@@ -45,9 +45,9 @@ public class AudioPlayer extends Product implements MultimediaControl {
         return super.toString()
                 + "\n"
                 + "Supported Audio Formats: "
-                + audioSpecification
+                + supportedAudioFormats
                 + "\n"
                 + "Supported Playlist Formats: "
-                + mediaType;
+                + supportedPlaylistFormats;
     }
 }

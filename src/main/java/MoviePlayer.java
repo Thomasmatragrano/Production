@@ -1,3 +1,4 @@
+import java.lang.reflect.Type;
 
 /**
  * @author Thomas Matragrano
@@ -7,6 +8,10 @@
 
     private Screen myScreen;
     private MonitorType monType;
+
+
+
+
     /**
      * This constructor sets the name, manufacturer, Screen, and MonitorType
      *
@@ -16,11 +21,11 @@
      * @param myScreen
      */
     public MoviePlayer(String name, String manufacturer, Screen myScreen, MonitorType monType) {
-        super(name);
+        super(name,ItemType.valueOf(String.valueOf(monType)),manufacturer);
+        this.name = name;
         this.manufacturer = manufacturer;
         this.myScreen = myScreen;
-        this.monType = monType;
-        type = ItemType.VISUAL;
+        Type = ItemType.VISUAL;
     }
 
     @Override

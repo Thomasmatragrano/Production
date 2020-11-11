@@ -1,10 +1,12 @@
+import java.lang.reflect.Type;
+
 /**
  * @author Thomas Matragrano
  * @brief Abstract, parent class that sets, gets, and displays general product features
  */
 public abstract class Product implements Item {
     int id;
-    ItemType type;
+    ItemType Type;
     String manufacturer;
     String name;
 
@@ -13,10 +15,10 @@ public abstract class Product implements Item {
      *
      * @param name
      */
-    public Product(String name) {
-
+    public Product(String name,ItemType T,String manufacturer) {
         this.name = name;
-        type = ItemType.AUDIO;
+        this.manufacturer = manufacturer;
+        this.Type = T;
     }
 
     public int getId() {
@@ -45,26 +47,34 @@ public abstract class Product implements Item {
      * @return a concatenated String
      */
     public String toString() {
-        return "Name: " + name + "\nManufacturer: " + manufacturer + "\nType: " + type;
+        return "Name: " + name + "\nManufacturer: " + manufacturer + "\nType: " + Type;
     }
+
+
+
+
 
     /**
      * @author Thomas Matragrano
      * @brief This widget class extends Product as to create objects from it to test.
      */
-    public static class Widget extends Product {
+   // public static class Widget extends Product {
 
         /**
          * This constructor takes parameters from product to instantiate Product objects.
-         *
-         * @param manufacturer
          * @param name
          * @param T
+         * @param manufacturer
          */
-        public Widget(String name, String manufacturer, String T) {
-            super(name);
-            this.manufacturer = manufacturer;
-            T = type.type;
-        }
-    }
+        //public Widget(String name, String T, String manufacturer) {
+
+         //   this.Type = T;
+         //   this.manufacturer = manufacturer;
+
+
+     //   }
+
+
+   // }
+
 }

@@ -87,7 +87,7 @@ public class ProductionRecord {
      * @param P
      */
     public ProductionRecord(Product P, int itemCount) {
-        serialNumber = P.manufacturer.substring(0, 3) + P.type.code + "0000" + itemCount;
+        serialNumber = P.manufacturer.substring(0, 3) + P.Type.code + "0000" + itemCount;
     }
     /**
      * This String method displays the production record information.

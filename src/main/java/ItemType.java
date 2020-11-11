@@ -19,4 +19,7 @@ public enum ItemType {
         code = Code;
         type = Type;
     }
+    public String getItemType(){
+        return type;
+    }
 }
