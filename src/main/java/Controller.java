@@ -5,10 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -20,7 +18,6 @@ import java.util.ArrayList;
  */
 public class Controller {
     ObservableList<Product> productLine = FXCollections.observableArrayList();
-
     @FXML
     private TableColumn<Product, String> tableVIewManufacturer;
     @FXML
@@ -64,8 +61,8 @@ public class Controller {
             Class.forName(JDBC_DRIVER);
             //Open a connection
             conn = DriverManager.getConnection(DB_URL);
-
             stmt = conn.createStatement();
+            //Display Full list of products in the tableview and listview
             String fullList = "SELECT * FROM PRODUCT";
             ResultSet rs = stmt.executeQuery(fullList);
             while (rs.next()) {
@@ -73,8 +70,12 @@ public class Controller {
                 });
                 chooseProductLV.getItems().addAll(rs.getString("Name"));
             }
-
-
+            //Display Full list of Production Record in the textarea
+            fullList = "SELECT * FROM PRODUCTIONRECORD";
+            rs = stmt.executeQuery(fullList);
+            while (rs.next()) {
+                productionTA.appendText("Prod. Num: " + rs.getInt("production_num")+" Product ID: " + rs.getInt("product_id")+" Serial Num: "+rs.getNString("serial_num")+" Date:" + rs.getDate("date_produced")+"\n");
+            }
         } catch (SQLException e) {
             taOutput.appendText(e.toString());
         } catch (ClassNotFoundException e) {
@@ -89,38 +90,20 @@ public class Controller {
      * @return void
      */
     public static void testMultimedia() {
-
-        AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
-
-                "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
-
+        AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo", "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
         Screen newScreen = new Screen("720x480", 40, 22);
-
-        MoviePlayer newMovieProduct = new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen,
-
-                MonitorType.LCD);
-
+        MoviePlayer newMovieProduct = new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LCD);
         ArrayList<MultimediaControl> productList = new ArrayList<MultimediaControl>();
-
         productList.add(newAudioProduct);
-
         productList.add(newMovieProduct);
-
         for (MultimediaControl p : productList) {
             System.out.println(p);
-
             p.play();
-
             p.stop();
-
             p.next();
-
             p.previous();
-
         }
-
     }
-
 
     /**
      * Calls to establish Database Connectivity.
@@ -130,6 +113,7 @@ public class Controller {
      * @return void
      */
     public void initialize() {
+        initializeDB();
         //Populates the Item Type ChoiceBox
         for (ItemType I : ItemType.values())
             itemTypeChoiceBox.getItems().addAll(String.valueOf(I));
@@ -138,51 +122,48 @@ public class Controller {
         quantityComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         quantityComboBox.getSelectionModel().selectFirst();
         quantityComboBox.setEditable(true);
-
-
-
+        //Setup Product Line Table
         tableViewName.setCellValueFactory(new PropertyValueFactory("Name"));
         tableViewType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().Type.type));
         tableVIewManufacturer.setCellValueFactory(new PropertyValueFactory("Manufacturer"));
         tableView.setItems(productLine);
-
-        initializeDB();
-
     }
-
 
     /**
      * Control for "Record Production" Button Click.
-     *
+     *Inserts ProductionRecord objects into the PRODUCTIONRECORD Database
      * @param actionEvent
      * @return void Prints to the console
      */
     public void recordProduction(ActionEvent actionEvent) {
-        /*
-        initializeDB();
+        // Product p = new Product(name,type,manufacturer);
+        int id = 0;
+        ProductionRecord pr = new ProductionRecord(id);
+        java.util.Date D = pr.getProdDate();
+        String serialNum = pr.getSerialNum();
+        id = pr.getProductID();
+        int prodNum = pr.getProductionNum();
 
-        int productID;
-        String serialNumber;
-        Date dateProduced;
         try {
-            final String sql = "INSERT INTO ProductionRecord (name, type, manufacturer) VALUES ( ?, ?, ?,?);";
+            final String sql = "INSERT INTO ProductionRecord (production_num, product_id, serial_num,date_produced) VALUES ( ?, ?, ?,?);";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, productID);
-            ps.setNString(2, serialNumber);
-            ps.setDate(3, dateProduced);
+            ps.setInt(1, prodNum);
+            ps.setInt(2, id);
+            ps.setString(3, serialNum);
+            ps.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
             ps.executeUpdate();
-            //Prints Full List of Products to the Console
+            //Prints Full List of Production Record to the Console
             stmt = conn.createStatement();
-            String fullList = "SELECT * FROM PRODUCT";
+            String fullList = "SELECT * FROM PRODUCTIONRECORD";
             ResultSet rs = stmt.executeQuery(fullList);
             while (rs.next()) {
-                System.out.println("ID: " + rs.getString(1) + "\nName: " + rs.getString(2) + "\nType " + rs.getString(3) + "\nManufacturer " + rs.getString(4));
-                //productionTA.setText("ID: " + rs.getString(1) + "\nName: " + rs.getString(2) + "\nType " + rs.getString(3) + "\nManufacturer " + rs.getString(4));
+                System.out.println("Prod. Num: " + rs.getString(1) + "\nID: " + rs.getString(2) + "\nSerial Num: " + rs.getString(3) + "\nDate: " + rs.getString(4));
+               // productionTA.appendText(pr.toString());
             }
             //clean up environment
-            ps.close();
-            stmt.close();
-            conn.close();
+            //ps.close();
+            //stmt.close();
+            //conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -190,10 +171,8 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-         */
-        //productionTA.appendText(chooseProductLV.getSelectionModel().getSelectedItem() + "\n");
-
+        productionTA.appendText(pr.toString());
+        //productionTA.appendText(chooseProductLV.getSelectionModel().getSelectedItem() + " Num Produced: " + quantityComboBox.getValue()+"\n");
     }
 
     /**
@@ -205,7 +184,7 @@ public class Controller {
      * @return void Prints to the console
      */
     public void addProduct(ActionEvent actionEvent) {
-
+ItemType it = ItemType.AUDIO;
         String name = lblNameOutput.getText();
         String manufacturer = lblManufacturerOutput.getText();
         final String type = itemTypeChoiceBox.getSelectionModel().getSelectedItem();
@@ -217,16 +196,15 @@ public class Controller {
             ps.setNString(2, type);
             ps.setNString(3, manufacturer);
             ps.executeUpdate();
-            //Prints Full List of Products to the Console
+            //Prints updated Full List of Products to the tableview and listview
             stmt = conn.createStatement();
-
             String fullList = "SELECT * FROM PRODUCT";
             ResultSet rs = stmt.executeQuery(fullList);
             while (rs.next()) {
-
-
-                System.out.println("ID: " + rs.getString(1) + "\nName: " + rs.getString(2) + "\nType " + rs.getString(3) + "\nManufacturer " + rs.getString(4));
-                //productionTA.setText("ID: " + rs.getString(1) + "\nName: " + rs.getString(2) + "\nType " + rs.getString(3) + "\nManufacturer " + rs.getString(4));
+                productLine.add(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
+                });
+                tableView.setItems(productLine);
+                chooseProductLV.getItems().addAll(rs.getString("Name"));
             }
             //clean up environment
             // ps.close();

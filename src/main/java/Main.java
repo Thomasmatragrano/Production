@@ -33,7 +33,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Scene scene = new Scene(root, 710, 400);
+        Scene scene = new Scene(root, 710, 420);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         primaryStage.setTitle("Production Line Tracker");
         primaryStage.setScene(scene);
