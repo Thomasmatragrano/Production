@@ -1,17 +1,19 @@
-/**
- * @author Thomas Matragrano
- * @brief creates a production record with a production number, ID, serial number, and date produced
- */
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Thomas Matragrano
+ * @brief creates a production record with a production number, ID, serial number, and date produced
+ */
 public class ProductionRecord {
     int productionNumber;
     private int productID;
     private String serialNumber;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Date dateProduced = java.sql.Date.valueOf(java.time.LocalDate.now());
+
     /**
      * This constructor sets the product ID, product number, serial number, and date Produced.
      *
@@ -19,11 +21,12 @@ public class ProductionRecord {
      */
     public ProductionRecord(int productID) {
         this.productID = productID;
-        productionNumber = 0;
-        serialNumber = "0";
-        dateProduced = java.sql.Date.valueOf(java.time.LocalDate.now());
+        productionNumber = getProductionNum();
+        serialNumber = getSerialNum();
+        dateProduced = getProdDate();
 
     }
+
     /**
      * This constructor sets the product ID, product number, serial number, and date Produced.
      *
@@ -36,7 +39,7 @@ public class ProductionRecord {
             int productionNumber, int productID, String serialNumber, Date dateProduced) {
         this.productID = productID;
         this.productionNumber = productionNumber;
-        this.serialNumber = serialNumber;
+        //this.serialNumber = serialNumber;
         dateProduced = new Date();
         this.dateProduced = dateProduced;
     }
@@ -73,6 +76,7 @@ public class ProductionRecord {
     public void setProdDate(Date dateProduced) {
         this.dateProduced = dateProduced;
     }
+
     /**
      * This constructor creates a unique serial number
      *
@@ -80,9 +84,10 @@ public class ProductionRecord {
      * @param P
      */
     public ProductionRecord(Product P, int itemCount) {
-        this.serialNumber = P.manufacturer.substring(0, 3) + P.Type.code + "0000" + itemCount;
-
+        serialNumber = P.manufacturer.substring(0, 3) + P.Type.code + "0000" + itemCount;
+//setSerialNum(serialNumber);
     }
+
     /**
      * This String method displays the production record information.
      *
@@ -96,7 +101,7 @@ public class ProductionRecord {
                 + " Serial Num: "
                 + serialNumber
                 + " Date: "
-                + dateProduced+"\n";
+                + dateProduced + "\n";
     }
 }
 

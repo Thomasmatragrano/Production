@@ -29,14 +29,14 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Label prefHeight="23.0" prefWidth="134.0" text="Product Name" />
-                <Label text="Manufacturer" GridPane.rowIndex="1" />
-                <Label text="Item Type" GridPane.rowIndex="2" />
+                <Label prefHeight="23.0" prefWidth="134.0" text="Product Name" textFill="#fcf9f9" />
+                <Label text="Manufacturer" textFill="#f5eded" GridPane.rowIndex="1" />
+                <Label text="Item Type" textFill="#fcf6f6" GridPane.rowIndex="2" />
                 <TextField fx:id="lblNameOutput" GridPane.columnIndex="1" />
                 <TextField fx:id="lblManufacturerOutput" prefHeight="37.0" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <ChoiceBox fx:id="itemTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </GridPane>
-            <Button fx:id="btnAddProduct" layoutX="138.0" layoutY="176.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" />
+            <Button fx:id="btnAddProduct" layoutX="138.0" layoutY="176.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" textFill="#e80101" />
             <TableView fx:id="tableView" layoutX="290.0" layoutY="14.0" prefHeight="294.0" prefWidth="393.0">
                 <columns>
                     <TableColumn fx:id="tableViewName" prefWidth="117.0" text="Name" />
@@ -44,21 +44,28 @@
                     <TableColumn fx:id="tableVIewManufacturer" prefWidth="148.0" text="Manufacturer" />
                 </columns>
             </TableView>
-            <Label layoutX="389.0" layoutY="320.0" text="Existing Products" />
+            <Label layoutX="389.0" layoutY="320.0" text="Existing Products" textFill="#f8f8f8" />
         </AnchorPane>
     </Tab>
     <Tab text="Produce">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            <Label layoutX="46.0" layoutY="14.0" text="Choose Product" />
+            <Label layoutX="46.0" layoutY="14.0" text="Choose Product" textFill="#f8f1f1" />
             <ListView fx:id="chooseProductLV" layoutX="7.0" layoutY="40.0" prefHeight="297.0" prefWidth="221.0" />
-            <Label layoutX="240.0" layoutY="105.0" text="Choose Quantity" />
-            <ComboBox fx:id="quantityComboBox" layoutX="240.0" layoutY="137.0" prefHeight="37.0" prefWidth="101.0" promptText="0" />
-            <Button fx:id="btnRecordProduction" layoutX="240.0" layoutY="186.0" mnemonicParsing="false" onAction="#recordProduction" text="Record Production" />
+            <Label layoutX="240.0" layoutY="120.0" text="Choose Quantity" textFill="WHITE" />
+            <ComboBox fx:id="quantityComboBox" layoutX="240.0" layoutY="149.0" prefHeight="37.0" prefWidth="101.0" promptText="0" />
+            <Button fx:id="btnRecordProduction" layoutX="240.0" layoutY="205.0" mnemonicParsing="false" onAction="#recordProduction" text="Record Production" textFill="#ee0707" />
+         <Label layoutX="454.0" layoutY="14.0" text="Test Product" textFill="#fffffe" />
+         <Button layoutX="458.0" layoutY="40.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Play" textFill="#e80606" />
+         <Button layoutX="458.0" layoutY="90.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Previous" textFill="#e80909" />
+         <Button layoutX="568.0" layoutY="90.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Next" textFill="#e81010" />
+         <Button layoutX="568.0" layoutY="40.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Stop" textFill="#e80606" />
+         <TextArea layoutX="458.0" layoutY="186.0" prefHeight="132.0" prefWidth="218.0" />
+         <Label layoutX="458.0" layoutY="156.0" text="Test History" textFill="#fcf6f6" />
         </AnchorPane>
     </Tab>
     <Tab text="Production Log">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            <TextArea fx:id="productionTA" layoutX="52.0" layoutY="40.0" prefHeight="265.0" prefWidth="541.0" />
+            <TextArea fx:id="productionTA" layoutX="5.0" layoutY="8.0" prefHeight="332.0" prefWidth="672.0" />
         </AnchorPane>
     </Tab>
 </TabPane>

@@ -11,11 +11,11 @@ public abstract class Product implements Item {
     String name;
 
     /**
-     * This constructor sets the name and audio type
+     * This constructor sets the name manufacturer and audio type
      *
      * @param name
      */
-    public Product(String name,ItemType T,String manufacturer) {
+    public Product(String name, ItemType T, String manufacturer) {
         this.name = name;
         this.manufacturer = manufacturer;
         this.Type = T;
@@ -51,30 +51,28 @@ public abstract class Product implements Item {
     }
 
 
-
-
-
     /**
      * @author Thomas Matragrano
      * @brief This widget class extends Product as to create objects from it to test.
      */
-   // public static class Widget extends Product {
+    public static class Widget extends Product {
 
         /**
          * This constructor takes parameters from product to instantiate Product objects.
+         *
          * @param name
          * @param T
          * @param manufacturer
          */
-        //public Widget(String name, String T, String manufacturer) {
-
-         //   this.Type = T;
-         //   this.manufacturer = manufacturer;
-
-
-     //   }
+        public Widget(String name, ItemType T, String manufacturer) {
+            super(name, T, manufacturer);
+            //   this.Type = T;
+            //   this.manufacturer = manufacturer;
 
 
-   // }
+        }
+
+
+    }
 
 }

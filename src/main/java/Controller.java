@@ -27,7 +27,7 @@ public class Controller {
     @FXML
     private TableView<Product> tableView;
     @FXML
-    private ListView<String> chooseProductLV;
+    private ListView chooseProductLV;
     @FXML
     private TextArea productionTA;
     @FXML
@@ -65,8 +65,9 @@ public class Controller {
             //Display Full list of products in the tableview and listview
             String fullList = "SELECT * FROM PRODUCT";
             ResultSet rs = stmt.executeQuery(fullList);
+
             while (rs.next()) {
-                productLine.add(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
+                productLine.addAll(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
                 });
                 chooseProductLV.getItems().addAll(rs.getString("Name"));
             }
@@ -74,7 +75,7 @@ public class Controller {
             fullList = "SELECT * FROM PRODUCTIONRECORD";
             rs = stmt.executeQuery(fullList);
             while (rs.next()) {
-                productionTA.appendText("Prod. Num: " + rs.getInt("production_num")+" Product ID: " + rs.getInt("product_id")+" Serial Num: "+rs.getNString("serial_num")+" Date:" + rs.getDate("date_produced")+"\n");
+                productionTA.appendText("Prod. Num: " + rs.getInt("production_num") + " Product ID: " + rs.getInt("product_id") + " Serial Num: " + rs.getNString("serial_num") + " Date:" + rs.getDate("date_produced") + "\n");
             }
         } catch (SQLException e) {
             taOutput.appendText(e.toString());
@@ -131,39 +132,32 @@ public class Controller {
 
     /**
      * Control for "Record Production" Button Click.
-     *Inserts ProductionRecord objects into the PRODUCTIONRECORD Database
+     * Inserts ProductionRecord objects into the PRODUCTIONRECORD Database
+     *
      * @param actionEvent
-     * @return void Prints to the console
+     * @return void
      */
     public void recordProduction(ActionEvent actionEvent) {
-        // Product p = new Product(name,type,manufacturer);
-        int id = 0;
-        ProductionRecord pr = new ProductionRecord(id);
-        java.util.Date D = pr.getProdDate();
-        String serialNum = pr.getSerialNum();
-        id = pr.getProductID();
-        int prodNum = pr.getProductionNum();
-
         try {
-            final String sql = "INSERT INTO ProductionRecord (production_num, product_id, serial_num,date_produced) VALUES ( ?, ?, ?,?);";
+            final String productid = "SELECT id,name FROM PRODUCT";
+            final String sql = "INSERT INTO ProductionRecord (product_id,serial_num,date_produced) VALUES ( ?,?,?);";
+
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, prodNum);
-            ps.setInt(2, id);
-            ps.setString(3, serialNum);
-            ps.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
-            ps.executeUpdate();
-            //Prints Full List of Production Record to the Console
-            stmt = conn.createStatement();
-            String fullList = "SELECT * FROM PRODUCTIONRECORD";
-            ResultSet rs = stmt.executeQuery(fullList);
+            ResultSet rs = stmt.executeQuery(productid);
+
             while (rs.next()) {
-                System.out.println("Prod. Num: " + rs.getString(1) + "\nID: " + rs.getString(2) + "\nSerial Num: " + rs.getString(3) + "\nDate: " + rs.getString(4));
-               // productionTA.appendText(pr.toString());
+                if (rs.getNString("name").equals(String.valueOf(chooseProductLV.getSelectionModel().getSelectedItem()))) {
+                    int id = rs.getInt("id");
+                    ProductionRecord pr = new ProductionRecord(id);
+                    String serialNum = pr.getSerialNum();
+                    ps.setInt(1, id);
+                    ps.setString(2, serialNum);
+                    ps.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
+                    ps.executeUpdate();
+                    productionTA.appendText(pr.toString());
+
+                }
             }
-            //clean up environment
-            //ps.close();
-            //stmt.close();
-            //conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -171,8 +165,7 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        productionTA.appendText(pr.toString());
-        //productionTA.appendText(chooseProductLV.getSelectionModel().getSelectedItem() + " Num Produced: " + quantityComboBox.getValue()+"\n");
+        //  productionTA.appendText(pr.toString());
     }
 
     /**
@@ -184,10 +177,11 @@ public class Controller {
      * @return void Prints to the console
      */
     public void addProduct(ActionEvent actionEvent) {
-ItemType it = ItemType.AUDIO;
+        ItemType it = ItemType.AUDIO;
         String name = lblNameOutput.getText();
         String manufacturer = lblManufacturerOutput.getText();
         final String type = itemTypeChoiceBox.getSelectionModel().getSelectedItem();
+
         try {
             //Inserts variables name, manufacturer, type into ProductionDB using a prepared statement
             final String sql = "INSERT INTO Product (name, type, manufacturer) VALUES ( ?, ?, ? );";
@@ -196,15 +190,19 @@ ItemType it = ItemType.AUDIO;
             ps.setNString(2, type);
             ps.setNString(3, manufacturer);
             ps.executeUpdate();
-            //Prints updated Full List of Products to the tableview and listview
+
             stmt = conn.createStatement();
             String fullList = "SELECT * FROM PRODUCT";
             ResultSet rs = stmt.executeQuery(fullList);
+            //Clearing tableview and listview to be updated
+            tableView.getItems().setAll();
+            chooseProductLV.getItems().setAll();
+            //Prints updated Full List of Products to the tableview and listview
             while (rs.next()) {
-                productLine.add(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
+                productLine.addAll(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
                 });
-                tableView.setItems(productLine);
-                chooseProductLV.getItems().addAll(rs.getString("Name"));
+                chooseProductLV.getItems().add(rs.getString("Name"));
+
             }
             //clean up environment
             // ps.close();

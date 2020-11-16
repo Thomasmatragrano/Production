@@ -10,16 +10,15 @@ public enum ItemType {
     ;
     protected String code;
     protected String type;
+
     /**
      * This constructor sets values for the enum constants.
      *
-     * @param Type,Code
+     * @param Type
+     * @param Code
      */
     ItemType(String Type, String Code) {
         code = Code;
         type = Type;
-    }
-    public String getItemType(){
-        return type;
     }
 }

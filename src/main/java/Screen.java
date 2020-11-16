@@ -1,7 +1,7 @@
 /**
  * @author Thomas Matragrano
  * @brief Class that implements and overrides all methods of ScreenSpec to be used for subclasses of
- *     Product that require a screen.
+ * Product that require a screen.
  */
 public class Screen implements ScreenSpec {
 
@@ -36,6 +36,7 @@ public class Screen implements ScreenSpec {
     public int getResponseTime() {
         return responseTime;
     }
+
     /**
      * This String method displays the resolution, refresh rate, and response time.
      *
