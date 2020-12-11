@@ -9,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * JavaFX event handling and input registry.
@@ -17,7 +19,19 @@ import java.util.ArrayList;
  * @author Thomas Matragrano
  */
 public class Controller {
-    ObservableList<Product> productLine = FXCollections.observableArrayList();
+    @FXML
+    private Label productLineLbl;
+    @FXML
+    private Label produceLbl;
+    @FXML
+    private Label signUpLbl;
+    @FXML
+    private TextArea newEmpTA;
+    @FXML
+    private TextField userField;
+    @FXML
+    private PasswordField passField;
+    private ObservableList<Product> productLine = FXCollections.observableArrayList();
     @FXML
     private TableColumn<Product, String> tableVIewManufacturer;
     @FXML
@@ -128,6 +142,7 @@ public class Controller {
         tableViewType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().Type.type));
         tableVIewManufacturer.setCellValueFactory(new PropertyValueFactory("Manufacturer"));
         tableView.setItems(productLine);
+        chooseProductLV.getSelectionModel().selectFirst();
     }
 
     /**
@@ -138,33 +153,42 @@ public class Controller {
      * @return void
      */
     public void recordProduction(ActionEvent actionEvent) {
-        try {
-            final String productid = "SELECT id,name FROM PRODUCT";
-            final String sql = "INSERT INTO ProductionRecord (product_id,serial_num,date_produced) VALUES ( ?,?,?);";
+        Pattern p = Pattern.compile("^[0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(quantityComboBox.getSelectionModel().getSelectedItem());
+        boolean check = m.find();
+        if (check) {
+            try {
+                final String productid = "SELECT id,name FROM PRODUCT";
+                final String sql = "INSERT INTO ProductionRecord (product_id,serial_num,date_produced) VALUES ( ?,?,?);";
 
-            ps = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery(productid);
+                ps = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery(productid);
 
-            while (rs.next()) {
-                if (rs.getNString("name").equals(String.valueOf(chooseProductLV.getSelectionModel().getSelectedItem()))) {
-                    int id = rs.getInt("id");
-                    ProductionRecord pr = new ProductionRecord(id);
-                    String serialNum = pr.getSerialNum();
-                    ps.setInt(1, id);
-                    ps.setString(2, serialNum);
-                    ps.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
-                    ps.executeUpdate();
-                    productionTA.appendText(pr.toString());
+                while (rs.next()) {
+                    if (rs.getNString("name").equals(String.valueOf(chooseProductLV.getSelectionModel().getSelectedItem()))) {
+                        int id = rs.getInt("id");
+                        ProductionRecord pr = new ProductionRecord(id);
+                        String serialNum = pr.getSerialNum();
+                        ps.setInt(1, id);
+                        ps.setString(2, serialNum);
+                        ps.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
+                        ps.executeUpdate();
+                        productionTA.appendText(pr.toString());
 
+                    }
                 }
+                produceLbl.setText("Production Recorded!");
+
+            } catch (SQLException se) {
+                se.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (SQLException se) {
-            se.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } else
+            produceLbl.setText("Please enter a valid Quantity.");
+
         //  productionTA.appendText(pr.toString());
     }
 
@@ -181,39 +205,81 @@ public class Controller {
         String name = lblNameOutput.getText();
         String manufacturer = lblManufacturerOutput.getText();
         final String type = itemTypeChoiceBox.getSelectionModel().getSelectedItem();
+        if (lblNameOutput.getText().isEmpty() || lblManufacturerOutput.getText().isEmpty())
+            productLineLbl.setText("Please input a value for product name and manufacturer.");
+        else {
+            try {
+                //Inserts variables name, manufacturer, type into ProductionDB Product table using a prepared statement
+                final String sql = "INSERT INTO Product (name, type, manufacturer) VALUES ( ?, ?, ? );";
+                ps = conn.prepareStatement(sql);
+                ps.setNString(1, name);
+                ps.setNString(2, type);
+                ps.setNString(3, manufacturer);
+                ps.executeUpdate();
 
-        try {
-            //Inserts variables name, manufacturer, type into ProductionDB using a prepared statement
-            final String sql = "INSERT INTO Product (name, type, manufacturer) VALUES ( ?, ?, ? );";
-            ps = conn.prepareStatement(sql);
-            ps.setNString(1, name);
-            ps.setNString(2, type);
-            ps.setNString(3, manufacturer);
-            ps.executeUpdate();
+                stmt = conn.createStatement();
+                String fullList = "SELECT * FROM PRODUCT";
+                ResultSet rs = stmt.executeQuery(fullList);
+                //Clearing tableview and listview to be updated
+                tableView.getItems().setAll();
+                chooseProductLV.getItems().setAll();
+                //Prints updated Full List of Products to the tableview and listview
+                while (rs.next()) {
+                    productLine.addAll(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
+                    });
+                    chooseProductLV.getItems().add(rs.getString("Name"));
 
-            stmt = conn.createStatement();
-            String fullList = "SELECT * FROM PRODUCT";
-            ResultSet rs = stmt.executeQuery(fullList);
-            //Clearing tableview and listview to be updated
-            tableView.getItems().setAll();
-            chooseProductLV.getItems().setAll();
-            //Prints updated Full List of Products to the tableview and listview
-            while (rs.next()) {
-                productLine.addAll(new Product(rs.getString("Name"), ItemType.valueOf(rs.getString("Type")), rs.getString("Manufacturer")) {
-                });
-                chooseProductLV.getItems().add(rs.getString("Name"));
+                }
+                //clean up environment
+                // ps.close();
+                // stmt.close();
+                // conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            lblManufacturerOutput.setText("");
+            lblNameOutput.setText("");
+            productLineLbl.setText("Product Added!");
+
+        }
+    }
+
+    public void empSignUp(ActionEvent actionEvent) {
+        String userName = userField.getText();
+        String pass = passField.getText();
+        if (userName.isEmpty() || pass.isEmpty())
+            signUpLbl.setText("Please Enter an Input for Username and Password.");
+        else {
+            Employee E = new Employee(userName, pass);
+            signUpLbl.setText("Registration Successful!");
+
+            try {
+                //Inserts Strings userName, pass, into ProductionDB Employee table using a prepared statement
+                final String sql = "INSERT INTO Employee (user_name, pass_word) VALUES ( ?, ?);";
+                ps = conn.prepareStatement(sql);
+                ps.setNString(1, E.username);
+                ps.setNString(2, E.password);
+                ps.executeUpdate();
+                //clean up environment
+                // ps.close();
+                // stmt.close();
+                // conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+
 
             }
-            //clean up environment
-            // ps.close();
-            // stmt.close();
-            // conn.close();
-        } catch (SQLException se) {
-            se.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+            userField.setText("");
+            passField.setText("");
+            newEmpTA.setText(E.toString());
         }
     }
 }

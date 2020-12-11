@@ -23,6 +23,7 @@ public class Main extends Application {
         launch(args);
     }
 
+
     /**
      * Creates Scene for sample.fxml implementation.
      * Implements style.css Style Sheet.
