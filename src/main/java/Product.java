@@ -1,8 +1,7 @@
-import java.lang.reflect.Type;
-
 /**
- * @author Thomas Matragrano
- * @brief Abstract, parent class that sets, gets, and displays general product features
+ * Represents a product registered for production.
+ * Configures general Product features.
+ * * @author Thomas Matragrano
  */
 public abstract class Product implements Item {
     int id;
@@ -11,9 +10,10 @@ public abstract class Product implements Item {
     String name;
 
     /**
-     * This constructor sets the name manufacturer and audio type
-     *
-     * @param name
+     * Sets abstract Product information.
+     * @param name This Product's name.
+     * @param manufacturer This Product's manufacturer.
+     * @param T This Product's Media Type.
      */
     public Product(String name, ItemType T, String manufacturer) {
         this.name = name;
@@ -21,58 +21,41 @@ public abstract class Product implements Item {
         this.Type = T;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setName(String s) {
-        name = s;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setManufacturer(String s) {
-        manufacturer = s;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
+    /**
+     * Gets this Product's ID.
+     * @return this Product's ID.
+     */
+    public int getId() { return id; }
 
     /**
-     * This String method displays the Product details.
-     *
-     * @return a concatenated String
+     * Sets this Product's name.
+     * @param s This Product's name.
+     */
+    public void setName(String s) { name = s; }
+
+    /**
+     * Gets this Product's name.
+     * @return this Product's name.
+     */
+    public String getName() { return name; }
+
+    /**
+     * Sets this Product's manufacturer.
+     * @param s This Product's manufacturer.
+     */
+    public void setManufacturer(String s) { manufacturer = s; }
+
+    /**
+     * Gets this Product's manufacturer.
+     * @return this product's manufacturer.
+     */
+    public String getManufacturer() { return manufacturer; }
+
+    /**
+     * Sets and displays the Product details.
+     * @return a String representing this Product's information.
      */
     public String toString() {
         return "Name: " + name + "\nManufacturer: " + manufacturer + "\nType: " + Type;
     }
-
-
-    /**
-     * @author Thomas Matragrano
-     * @brief This widget class extends Product as to create objects from it to test.
-     */
-    public static class Widget extends Product {
-
-        /**
-         * This constructor takes parameters from product to instantiate Product objects.
-         *
-         * @param name
-         * @param T
-         * @param manufacturer
-         */
-        public Widget(String name, ItemType T, String manufacturer) {
-            super(name, T, manufacturer);
-            //   this.Type = T;
-            //   this.manufacturer = manufacturer;
-
-
-        }
-
-
-    }
-
 }

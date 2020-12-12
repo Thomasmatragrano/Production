@@ -1,12 +1,24 @@
 /**
+ * Declares methods for products that require a screen.
  * @author Thomas Matragrano
- * @brief Interface that declares the methods for products that require a screen
  */
 public interface ScreenSpec {
 
-    public String getResolution();
+    /**
+     * Get's this ScreenSpec's resolution.
+     * @return  this ScreenSpec's resolution.
+     */
+    String getResolution();
 
-    public int getRefreshRate();
+    /**
+     * Get's this ScreenSpec's refresh rate.
+     * @return this ScreenSpec's refresh rate.
+     */
+     int getRefreshRate();
 
-    public int getResponseTime();
+    /**
+     * Get's this ScreenSpec's response time.
+     * @return this ScreenSpec's response time.
+     */
+     int getResponseTime();
 }

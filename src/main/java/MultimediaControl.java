@@ -1,13 +1,18 @@
 /**
+ * Provides common playback functions to be implemented.
  * @author Thomas Matragrano
- * @brief Interface that declares playback functions to be used on product subclasses
  */
 public interface MultimediaControl {
-    public void play();
 
-    public void stop();
+    /** This void method shows the user is playing media. */
+    void play();
 
-    public void previous();
+    /** This void method shows the user is stopping media. */
+    void stop();
 
-    public void next();
+    /** This void method shows the user is selecting the previous option. */
+    void previous();
+
+    /** This void method shows the user is selecting the next option. */
+    void next();
 }

@@ -56,16 +56,11 @@
     </Tab>
     <Tab text="Produce">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            <Label layoutX="46.0" layoutY="14.0" text="Choose Product" textFill="#f8f1f1" />
-            <ListView fx:id="chooseProductLV" layoutX="7.0" layoutY="40.0" prefHeight="297.0" prefWidth="221.0" />
-            <Label layoutX="240.0" layoutY="120.0" text="Choose Quantity" textFill="WHITE" />
-            <ComboBox fx:id="quantityComboBox" layoutX="240.0" layoutY="149.0" prefHeight="37.0" prefWidth="101.0" promptText="0" />
-            <Button fx:id="btnRecordProduction" layoutX="240.0" layoutY="205.0" mnemonicParsing="false" onAction="#recordProduction" text="Record Production" textFill="#ee0707" />
-         <Label layoutX="454.0" layoutY="14.0" text="Test Product" textFill="#fffffe" />
-         <Button layoutX="458.0" layoutY="55.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Play" textFill="#e80606" />
-         <Button layoutX="458.0" layoutY="111.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Previous" textFill="#e80909" />
-         <Button layoutX="568.0" layoutY="111.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Next" textFill="#e81010" />
-         <Button layoutX="568.0" layoutY="55.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="Stop" textFill="#e80606" />
+            <Label layoutX="107.0" layoutY="14.0" text="Choose Product" textFill="#f8f1f1" />
+            <ListView fx:id="chooseProductLV" layoutX="7.0" layoutY="40.0" prefHeight="236.0" prefWidth="343.0" />
+            <Label layoutX="444.0" layoutY="40.0" text="Choose Quantity" textFill="WHITE" />
+            <ComboBox fx:id="quantityComboBox" layoutX="492.0" layoutY="89.0" prefHeight="37.0" prefWidth="101.0" promptText="0" />
+            <Button fx:id="btnRecordProduction" layoutX="399.0" layoutY="156.0" mnemonicParsing="false" onAction="#recordProduction" text="Record Production" textFill="#ee0707" />
          <Label fx:id="produceLbl" layoutX="262.0" layoutY="279.0" prefHeight="57.0" prefWidth="400.0" textFill="#22da0d" />
         </AnchorPane>
     </Tab>

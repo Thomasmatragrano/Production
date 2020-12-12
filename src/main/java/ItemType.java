@@ -1,6 +1,7 @@
 /**
+ * Sets product type constants to be implemented.
+ * ItemType takes a type and a code.
  * @author Thomas Matragrano
- * @brief Sets product type constants to be implemented.
  */
 public enum ItemType {
     AUDIO("Audio", "AU"),
@@ -12,10 +13,9 @@ public enum ItemType {
     protected String type;
 
     /**
-     * This constructor sets values for the enum constants.
-     *
-     * @param Type
-     * @param Code
+     * Sets This ItemType's type and code for the enum constants.
+     * @param Type This ItemType's full typing.
+     * @param Code This ItemType's two letter code.
      */
     ItemType(String Type, String Code) {
         code = Code;

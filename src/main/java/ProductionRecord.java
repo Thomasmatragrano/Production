@@ -1,97 +1,52 @@
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * Represents a production record of Products.
+ * Gets
  * @author Thomas Matragrano
- * @brief creates a production record with a production number, ID, serial number, and date produced
  */
 public class ProductionRecord {
     int productionNumber;
-    private int productID;
-    private String serialNumber;
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private Date dateProduced = java.sql.Date.valueOf(java.time.LocalDate.now());
+    private final int productID;
+    private final String serialNumber;
+    private Date dateProduced;
 
     /**
-     * This constructor sets the product ID, product number, serial number, and date Produced.
-     *
-     * @param productID
+     * Sets this ProductionRecord's Product information.
+     * @param productID This ProductionRecord's product ID.
      */
     public ProductionRecord(int productID) {
         this.productID = productID;
         productionNumber = getProductionNum();
         serialNumber = getSerialNum();
         dateProduced = getProdDate();
-
     }
 
     /**
-     * This constructor sets the product ID, product number, serial number, and date Produced.
-     *
-     * @param dateProduced
-     * @param productID
-     * @param productionNumber
-     * @param serialNumber
+     * Gets this ProductionRecord's production number.
+     * @return this ProductionRecord's production number.
      */
-    public ProductionRecord(
-            int productionNumber, int productID, String serialNumber, Date dateProduced) {
-        this.productID = productID;
-        this.productionNumber = productionNumber;
-        //this.serialNumber = serialNumber;
-        dateProduced = new Date();
-        this.dateProduced = dateProduced;
-    }
+    public int getProductionNum() { return productionNumber; }
 
-    public int getProductionNum() {
-        return productionNumber;
-    }
+    /**
+     * Gets this ProductionRecord's serial number.
+     * @return this ProductionRecord's serial number.
+     */
+    public String getSerialNum() { return serialNumber; }
 
-    public void setProductionNum(int productionNumber) {
-        this.productionNumber = productionNumber;
-    }
-
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public String getSerialNum() {
-        return serialNumber;
-    }
-
-    public void setSerialNum(String serialNumber) {
-        this.serialNumber = serialNumber;
-
-    }
-
+    /**
+     * Gets this ProductionRecord's production date.
+     * @return this ProductionRecord's production date.
+     */
     public Date getProdDate() {
+        dateProduced = java.sql.Date.valueOf(java.time.LocalDate.now());
         return dateProduced;
     }
 
-    public void setProdDate(Date dateProduced) {
-        this.dateProduced = dateProduced;
-    }
-
     /**
-     * This constructor creates a unique serial number
-     *
-     * @param itemCount
-     * @param P
-     */
-    public ProductionRecord(Product P, int itemCount) {
-        serialNumber = P.manufacturer.substring(0, 3) + P.Type.code + "0000" + itemCount;
-//setSerialNum(serialNumber);
-    }
-
-    /**
-     * This String method displays the production record information.
-     *
-     * @return a concatenated String
+     * Prints this ProductionRecord's information.
+     * @return a concatenated String of ProductionRecord members.
      */
     public String toString() {
         return "Prod. Num: "

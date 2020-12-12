@@ -1,15 +1,36 @@
 /**
  * @author Thomas Matragrano
- * @brief Interface that declares methods which will be used by the product parent and child classes
+ * Interface that declares methods which will be used by the product parent and child classes
  */
 public interface Item {
-    public int getId();
 
-    public void setName(String s);
+     /**
+      * Gets the ID of a Product.
+      * @return the ID of a Product.
+      */
+     int getId();
 
-    public String getName();
+     /**
+      * Sets a Product's name.
+      * @param s The Product's name.
+      */
+     void setName(String s);
 
-    public void setManufacturer(String s);
+     /**
+      * Gets the name of a Product.
+      * @return the name of a Product.
+      */
+     String getName();
 
-    public String getManufacturer();
+     /**
+      * Sets a Product's manufacturer.
+      * @param s the manufacturer of a Product.
+      */
+     void setManufacturer(String s);
+
+     /**
+      * Gets the manufacturer of a Product.
+      * @return the manufacturer of a Product.
+      */
+     String getManufacturer();
 }
