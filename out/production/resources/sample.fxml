@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="703.0" stylesheets="@style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <Tab text="Product Line">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="677.0">
+            <GridPane layoutX="14.0" layoutY="27.0" prefHeight="127.0" prefWidth="263.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <Label prefHeight="23.0" prefWidth="134.0" text="Product Name" textFill="#fcf9f9" />
+                <Label text="Manufacturer" textFill="#f5eded" GridPane.rowIndex="1" />
+                <Label text="Item Type" textFill="#fcf6f6" GridPane.rowIndex="2" />
+                <TextField fx:id="lblNameOutput" GridPane.columnIndex="1" />
+                <TextField fx:id="lblManufacturerOutput" prefHeight="37.0" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ChoiceBox fx:id="itemTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </GridPane>
+            <Button fx:id="btnAddProduct" layoutX="76.0" layoutY="195.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" textFill="#e80101" />
+            <TableView fx:id="tableView" layoutX="294.0" layoutY="33.0" prefHeight="282.0" prefWidth="389.0">
+                <columns>
+                    <TableColumn fx:id="tableViewName" prefWidth="117.0" text="Name" />
+                    <TableColumn fx:id="tableViewType" prefWidth="127.0" text="Type" />
+                    <TableColumn fx:id="tableVIewManufacturer" prefWidth="148.0" text="Manufacturer" />
+                </columns>
+            </TableView>
+            <Label layoutX="405.0" layoutY="3.0" text="Existing Products" textFill="#f8f8f8" />
+         <Label fx:id="productLineLbl" layoutX="7.0" layoutY="314.0" prefHeight="40.0" prefWidth="669.0" textFill="#3dd732">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+        </AnchorPane>
+    </Tab>
+    <Tab text="Produce">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <Label layoutX="107.0" layoutY="14.0" text="Choose Product" textFill="#f8f1f1" />
+            <ListView fx:id="chooseProductLV" layoutX="7.0" layoutY="40.0" prefHeight="236.0" prefWidth="343.0" />
+            <Label layoutX="444.0" layoutY="40.0" text="Choose Quantity" textFill="WHITE" />
+            <ComboBox fx:id="quantityComboBox" layoutX="492.0" layoutY="89.0" prefHeight="37.0" prefWidth="101.0" promptText="0" />
+            <Button fx:id="btnRecordProduction" layoutX="399.0" layoutY="156.0" mnemonicParsing="false" onAction="#recordProduction" text="Record Production" textFill="#ee0707" />
+         <Label fx:id="produceLbl" layoutX="262.0" layoutY="279.0" prefHeight="57.0" prefWidth="400.0" textFill="#22da0d" />
+        </AnchorPane>
+    </Tab>
+    <Tab text="Production Log">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <TextArea fx:id="productionTA" layoutX="5.0" layoutY="8.0" prefHeight="332.0" prefWidth="672.0" />
+        </AnchorPane>
+    </Tab>
+   <Tab text="Employee Login">
+     <content>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+               <Label layoutX="14.0" layoutY="73.0" text="First and Last Name :" />
+               <Label layoutX="14.0" layoutY="127.0" text="Password :" />
+               <TextField fx:id="userField" layoutX="214.0" layoutY="66.0" prefHeight="37.0" prefWidth="156.0" />
+               <Label layoutX="14.0" prefHeight="73.0" prefWidth="523.0" text="PRODUCTION LINE EMPLOYEE SIGN UP" textFill="#b21e1e">
+                  <font>
+                     <Font name="Javanese Text" size="26.0" />
+                  </font>
+               </Label>
+               <Button layoutX="216.0" layoutY="174.0" mnemonicParsing="false" onAction="#empSignUp" prefHeight="43.0" prefWidth="152.0" text="Register" textFill="#dd1717">
+                  <font>
+                     <Font name="Monospaced Regular" size="22.0" />
+                  </font>
+               </Button>
+               <PasswordField fx:id="passField" layoutX="214.0" layoutY="120.0" prefHeight="37.0" prefWidth="156.0" />
+               <TextArea fx:id="newEmpTA" layoutX="397.0" layoutY="103.0" prefHeight="191.0" prefWidth="294.0" />
+               <Label layoutX="443.0" layoutY="73.0" text="New Employee Details" />
+               <Label fx:id="signUpLbl" alignment="TOP_LEFT" layoutY="248.0" prefHeight="51.0" prefWidth="412.0" textFill="#3ce826">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </AnchorPane>
+     </content>
+   </Tab>
+</TabPane>
