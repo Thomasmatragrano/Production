@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 /**
  * Main Driver Class.
  * Loads JavaFX GUI.
+ *
  * @author Thomas Matragrano
  */
 public class Main extends Application {
@@ -21,6 +22,7 @@ public class Main extends Application {
     /**
      * Creates Scene for sample.fxml implementation.
      * Implements style.css Style Sheet.
+     *
      * @param primaryStage This Main's start environment.
      */
     @Override
