@@ -1,6 +1,8 @@
 # Production Line Tracker
 
 You have been hired to create software for a media player production facility that will keep track of what products are produced.  Without the software, workers on the production floor are physically producing items and having to write down what is produced in a production log book. Management would like the production tracking to be more automated so the workers don't need to spend as much time recording what was produced, the log will be more accurate, and it will be easier to generate production reports. In addition to the ability to record production, the software also needs the ability to add to the product line (the catalog of products that are able to be produced).
+* Class Diagram: https://github.com/Thomasmatragrano/Production/blob/master/docs/ClassUML.png
+* Database Diagram: https://github.com/Thomasmatragrano/Production/blob/master/docs/dbUML.png
 
 ## Getting Started
 
@@ -77,7 +79,6 @@ InteliJ pulgins: ctr+alt+l
 ## Deployment
 
 Download the zip file or clone the repository, then unzip or pull and launch from your IDE.
-
 ## Built With
 
 * [Stackedit.io](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
@@ -103,7 +104,7 @@ See also the list of [contributors](https://github.com/ProductionLineTrackerBeta
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-
+* Javadoc: https://github.com/Thomasmatragrano/Production/blob/master/docs/index.html
 * Professor Vanselow's Teachings
 * OOP Project
 * TutorialsPoint
